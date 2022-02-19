@@ -1,5 +1,3 @@
-/*-------------Boiler Plate ------------ */
-
 const readline = require('readline');
 const readlineInterface = readline.createInterface(process.stdin, process.stdout);
 
