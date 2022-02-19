@@ -24,41 +24,33 @@ while(true){
   } 
   if (answer === "Yes"){
   return startGame()
-  
-  //process.exit()
   }
 }
 }
 
-//define your current location state
-//let currentLocation = Tardis;
 
-//Create a start game function to tell you what your current room is 
-async function startGame(){
- console.log(`You are currently in the ${Tardis.description}`)
-}
-
-
-//uUtilizing the constructor method and passing in our arguments to construct
+//Creating the room class
 class room {
-//mapping the 'this' keyword to the arguments passed in the constructor
-	constructor(name, connections, item){
+//utilizing the constructor method and passing in arguments to constructor
+	constructor(name, description, item, locked){
 
-	this.name = name
+  //mapping the 'this' keyword to the arguments passed in the constructor
+	this.name = name;
 
-  this.connections = connections
+  this.description = description;
 
-	this.item = item
+	this.item = item;
+
+  this.locked = locked;
 
 	}
 }
 
-
 //create new object of the room class - "Tardis"
-let Tardis = new room("Tardis",[]);
+let Tardis = new room("Tardis","Tardis");
 
 //create new object of the room class - "Hall"
-let Hallway = new room("Tardis", "Labratory", "Cell");
+let Hallway = new room("Hallway", "Labratory", "Cell");
 
 //create new object of the room class - "Power"
 let Power = new room();
@@ -71,6 +63,31 @@ let Labratory = new room();
 
 //Create ne object of the room class - "Center"
 let Center = new room();
+
+
+//define your current location state
+//let currentLocation = Tardis;
+
+//Create a start game function to tell you what your current room is
+// ******the name property does not seem to be working, I had it working at one point but now only description works
+async function startGame(){
+  const actionMessage = `You are currently in the ${Tardis.description}.\n
+  In front of you is the control panel with an [up] and [down] control switch.\n
+  To the left of you are the doors to the outside.\n
+  What would you like to do?\n  >_`;
+  let answer = await ask(actionMessage);
+ 
+ //  //Logic to check to see if the user inputs Up or Down 
+ //  while(true){
+ //    if (answer === "Open Door"){
+ //      console.log("You cannot open the door")
+ //    }
+ //    if(answer ==="Up Control Switch"){
+ //     roomLookUp
+ //    }
+ //  }
+ // }
+ 
 
 //create lookup table to map the room keyword to the object
 let roomLookUp = {
@@ -91,4 +108,4 @@ let roomStateMachine = {
   cell: ["Hallway"],
   center: ["Hallway"],
 };
-
+}
