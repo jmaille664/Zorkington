@@ -55,6 +55,9 @@ class room {
   talk(){
     console.log("The people in the village are called the thal's.\n. The Thal's warn you that the city is inhabited by an evil alien race called the Daleks");
   }
+  labratory(){
+    console.log("Oh no! The room is filled with daleks! Exterminate. Game is over you are dead")
+  }
 
 }
 
@@ -160,6 +163,7 @@ async function jungle(currentLocation){
     roomLookUp[currentLocation].move()
     if(roomStateMachine[currentLocation].includes("City")){
       currentLocation = "city"
+      city(currentLocation);
       //console.log(currentLocation);
     }
   }
@@ -172,21 +176,49 @@ async function jungle(currentLocation){
 //function to move to the city
 async function city(currentLocation){
   const actionMessage = `You are currently in the ${roomLookUp[currentLocation].name}.\n
-  Infront of you are doors and a keypard\n
+  Infront of you are doors that you could [open]\n
   What would you like to do?\n  >_`;
   let answer = await ask(actionMessage);
  
-  if (answer === "open door"){
+  if (answer === "move city"){
     roomLookUp[currentLocation].talk();
   }
-  if(answer === "move city"){
+  if(answer === "open door"){
     roomLookUp[currentLocation].move()
     if(roomStateMachine[currentLocation].includes("City")){
       currentLocation = "city"
-      console.log(currentLocation);
+      //this is not working to move into the final moves function
+      finalMoves(currentLocation);
     }
   }
   else{
     console.log("You cant go there from here");
   }
 }
+
+//function to move within the city
+async function finalMoves(currentLocation){
+    const actionMessage = `You are currently in the ${roomLookUp[currentLocation].name}.\n
+    To the left of you are doors that lead to a [labratory]\n
+    Down the hallway is another set of doors that lead to the [center] or the city\n
+    Remember to watch out for Daleks! 
+    Where would you like to go?  >_`;
+    let answer = await ask(actionMessage);
+   
+    if (answer === "move labratory"){
+      roomLookUp[currentLocation].labratory();
+      process.exit()
+    }
+    if(answer === "move center"){
+      roomLookUp[currentLocation].move()
+      if(roomStateMachine[currentLocation].includes("City")){
+        currentLocation = "city"
+        console.log(currentLocation);
+      }
+    }
+    else{
+      console.log("You cant go there from here");
+    }
+    
+  }
+  
